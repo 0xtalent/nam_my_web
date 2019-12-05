@@ -9,7 +9,6 @@ from flask_pymongo import PyMongo
 from datetime import datetime
 
 
-
 app = Flask(__name__)
 app.config["MONGO_URI"] = "mongodb://localhost:27017/myweb"
 mongo = PyMongo(app)
@@ -29,7 +28,7 @@ def board_write():
             "name": name,
             "title": title,
             "contents": contents,
-            "pubdate" : current_utc_time,
+            "pubdate": current_utc_time,
             "view": 0,
         }
 
