@@ -9,6 +9,8 @@ from flask_pymongo import PyMongo
 from datetime import datetime
 from bson.objectid import ObjectId
 from flask import abort
+from flask import redirect
+from flask import url_for
 import time
 
 
@@ -70,7 +72,7 @@ def board_write():
 
         x = board.insert_one(post)
         print(x.inserted_id)
-        return str(x.inserted_id)
+        return redirect(url_for("board_view", idx=x.inserted_id))
     else:
         return render_template("write.html")
 
