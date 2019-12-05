@@ -31,9 +31,9 @@ def format_datetime(value):
     return value.strftime('%Y-%m-%d %H:%M:%S')
 
 # 주소를 만들자
-@app.route("/view")
-def board_view():
-    idx = request.args.get("idx")
+@app.route("/view/<idx>")
+def board_view(idx):
+    # idx = request.args.get("idx")
     if idx is not None:
         board = mongo.db.board
         data = board.find_one({"_id": ObjectId(idx)})
