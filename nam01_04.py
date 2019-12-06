@@ -40,7 +40,7 @@ def lists():
 
     # 넘어온 search값과 keyword값을 받아야겠죠?
     search = request.args.get("search", -1, type=int)
-    keyword = request.args.get("keyword", type=int)
+    keyword = request.args.get("keyword", type=str)
 
     # 최종적으로 완성된 쿼리를 만들 변수
     query = {}
@@ -49,14 +49,14 @@ def lists():
     search_list = []
 
     if search == 0:
-        search_list.append({"title": {"&regex": keyword}})
+        search_list.append({"title": {"$regex": keyword}})
     elif search == 1:
-        search_list.append({"contents": {"&regex": keyword}})
+        search_list.append({"contents": {"$regex": keyword}})
     elif search == 2:
-        search_list.append({"title": {"&regex": keyword}})
-        search_list.append({"contents": {"&regex": keyword}})
+        search_list.append({"title": {"$regex": keyword}})
+        search_list.append({"contents": {"$regex": keyword}})
     elif search == 3:
-        search_list.append({"name": {"&regex": keyword}})
+        search_list.append({"name": {"$regex": keyword}})
 
     # 검색 대상이 한개라도 존재할 경우 query 변수에 $or 리스트를 쿼리 합니다.
     if len(search_list) > 0:
@@ -65,10 +65,10 @@ def lists():
     print(query)
 
     board = mongo.db.board
-    datas = board.find({}).skip((page - 1) * limit).limit(limit)
+    datas = board.find(query).skip((page - 1) * limit).limit(limit)
 
     # 게시물의 총 갯수
-    tot_count = board.find({}).count()
+    tot_count = board.find(query).count()
     # 마지막 페이지의 수를 구하자
     last_page_num = math.ceil(tot_count / limit)
 
