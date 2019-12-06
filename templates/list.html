@@ -13,7 +13,7 @@
         <!--반복되는 구간-->
         {% for data in datas %}
         <tr>
-            <td>{{loop.index}}</td>
+            <td>{{loop.index + ((page - 1) * limit)}}</td>
             <td><a href="{{url_for('board_view', idx=data._id)}}">{{data.title}}</a></td>
             <td>{{data.name}}</td>
             <td>{{data.pubdate | formatdatetime}}</td>
