@@ -11,6 +11,7 @@ from flask import abort
 from flask import redirect
 from flask import url_for
 import time
+import math
 
 
 app = Flask(__name__)
@@ -39,7 +40,29 @@ def lists():
 
     board = mongo.db.board
     datas = board.find({}).skip((page - 1) * limit).limit(limit)
-    return render_template("list.html", datas=datas)
+
+    # 게시물의 총 갯수
+    tot_count = board.find({}).count()
+    # 마지막 페이지의 수를 구하자
+    last_page_num = math.ceil(tot_count / limit)
+
+    # 페이지 블럭을 5개씩 표기
+    block_size = 5
+    # 현재 블럭의 위치
+    block_num = int((page - 1) / block_size)
+    # 블럭의 시작 위치
+    block_start = int((block_size * block_num) + 1)
+    # 블럭의 끝 위치
+    block_last = math.ceil(block_start + (block_size - 1))
+
+    return render_template(
+        "list.html",
+        datas=datas,
+        limit=limit,
+        page=page,
+        block_start=block_start,
+        block_last=block_last,
+        last_page_num=last_page_num)
 
 # 주소를 만들자
 @app.route("/view/<idx>")
