@@ -62,7 +62,7 @@
     <option value="2">제목+내용</option>
     <option value="3">작성자</option>
 </select>
-<input type="text" name="keyword" id="keyword">
+<input type="text" name="keyword" id="keyword" {% if keyword != "" %} value={{keyword}} {% endif %}>
 <input type="button" value="검색" onclick="search()">
 {% else %}
 <h3>데이터가 없습니다.</h3>
