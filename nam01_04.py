@@ -97,6 +97,10 @@ def lists():
 def board_view(idx):
     # idx = request.args.get("idx")
     if idx is not None:
+        page = request.args.get("page")
+        search = request.args.get("search")
+        keyword = request.args.get("keyword")
+
         board = mongo.db.board
         data = board.find_one({"_id": ObjectId(idx)})
 
@@ -110,7 +114,7 @@ def board_view(idx):
                 "view": data.get("view")
             }
 
-            return render_template("view.html", result=result)
+            return render_template("view.html", result=result, page=page, search=search, keyword=keyword)
         return abort(404)
 
 
