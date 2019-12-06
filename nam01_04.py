@@ -88,7 +88,9 @@ def lists():
         page=page,
         block_start=block_start,
         block_last=block_last,
-        last_page_num=last_page_num)
+        last_page_num=last_page_num,
+        search=search,
+        keyword=keyword)
 
 # 주소를 만들자
 @app.route("/view/<idx>")
