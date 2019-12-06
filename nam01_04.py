@@ -36,7 +36,7 @@ def lists():
     # 페이지 값(값이 없는 경우 기본값은 1)
     page = request.args.get("page", 1, type=int)
     # 한 페이지 당 몇 개의 게시물을 출력할 지
-    limit = request.args.get("limit", 10, type=int)
+    limit = request.args.get("limit", 5, type=int)
 
     board = mongo.db.board
     datas = board.find({}).skip((page - 1) * limit).limit(limit)
